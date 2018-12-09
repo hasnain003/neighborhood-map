@@ -19,7 +19,7 @@ class Helper {
 			.map(key => `${key}=${urlPrams[key]}`)
 			.join('&');
 	}
-	static header() {
+	static headers() {
 		return {
 			Accept:"application/json"	
 		};
