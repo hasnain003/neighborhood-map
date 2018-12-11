@@ -5,35 +5,44 @@ import SquareAPI from "./API/index"
 
 
 class App extends Component {
-  constructor() {
+   constructor() {
     super();
     this.state = {
       venues: [],
       markers: [],
       center: [],
-      zoom:12
+      zoom: 12,
+      updateSuperState: obj => {
+        this.setState(obj);
+      }
     };
   }
 
   closeAllMarkers = () => {
-    const markers = this.state.markers.map(marker =>{
+    const markers = this.state.markers.map(marker => {
       marker.isOpen = false;
       return marker;
     });
-    this.setState({markers: Object.assign(this.state.markers,markers) });
+    this.setState({ markers: Object.assign(this.state.markers, markers) });
   };
 
   handleMarkerClick = marker => {
     this.closeAllMarkers();
-    marker.isOpen=true;
-    this.setState({markers: Object.assign(this.state.markers,marker)});
+    marker.isOpen = true;
+    this.setState({ markers: Object.assign(this.state.markers, marker) });
 
     const venue = this.state.venues.find(venue => venue.id === marker.id);
     SquareAPI.getVenueDetails(marker.id).then(res => {
       const newVenue = Object.assign(venue, res.response.venue);
       this.setState({ venues: Object.assign(this.state.venues, newVenue) });
-    });   
+    });
   };
+
+  handleListItemClick = venue => {
+    const marker = this.state.markers.find(marker => marker.id === venue.id);
+    this.handleMarkerClick(marker);
+  };
+
   componentDidMount() {
     SquareAPI.search({
       query: 'coffee',
@@ -52,7 +61,6 @@ class App extends Component {
         };
       });
       this.setState({ venues, markers, center });
-      console.log(results);
     });
   }
 
