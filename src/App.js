@@ -22,6 +22,7 @@ class App extends Component {
     const markers = this.state.markers.map(marker => {
       marker.isOpen = false;
       return marker;
+      console.log(marker);
     });
     this.setState({ markers: Object.assign(this.state.markers, markers) });
   };
@@ -35,7 +36,9 @@ class App extends Component {
     SquareAPI.getVenueDetails(marker.id).then(res => {
       const newVenue = Object.assign(venue, res.response.venue);
       this.setState({ venues: Object.assign(this.state.venues, newVenue) });
+      console.log(res);
     });
+    console.log(marker);
   };
 
   handleListItemClick = venue => {
@@ -46,7 +49,7 @@ class App extends Component {
   componentDidMount() {
     SquareAPI.search({
       query: 'coffee',
-      near: 'Eau Claire, WI',
+      near: 'Kolkata',
       limit: 10
     }).then(results => {
       const { venues } = results.response;
@@ -67,6 +70,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+      hello
         <Map {...this.state} handleMarkerClick={this.handleMarkerClick}/>
       </div>
     );
