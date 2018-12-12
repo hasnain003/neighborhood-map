@@ -6,6 +6,9 @@
   flex-flow: row nowrap;
 }
 
+.sideBar {
+  width:25%;
+}
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
