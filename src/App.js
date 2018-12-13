@@ -22,7 +22,6 @@ class App extends Component {
     const markers = this.state.markers.map(marker => {
       marker.isOpen = false;
       return marker;
-      console.log(marker);
     });
     this.setState({ markers: Object.assign(this.state.markers, markers) });
   };
@@ -36,9 +35,7 @@ class App extends Component {
     SquareAPI.getVenueDetails(marker.id).then(res => {
       const newVenue = Object.assign(venue, res.response.venue);
       this.setState({ venues: Object.assign(this.state.venues, newVenue) });
-      console.log(res);
     });
-    console.log(marker);
   };
 
   handleListItemClick = venue => {
@@ -64,7 +61,9 @@ class App extends Component {
         };
       });
       this.setState({ venues, markers, center });
-    });
+    }).catch(function (e) {
+      console.log("Ann Error Occuur "+e);
+    })
   }
 
   render() {
